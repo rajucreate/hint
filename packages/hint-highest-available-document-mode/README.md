@@ -48,25 +48,21 @@ Notes:
 
 ### Important note about case-sensitivity
 
-Although the `X-UA-Compatible` header is defined as case-insensitive
-according to Microsoft's specification, the current implementation of
-this hint performs a **case-sensitive** comparison against the value
-`ie=edge`.
+The `X-UA-Compatible` header is defined as case-insensitive according to Microsoft's specification.
 
-This means that a valid header like:
+The hint now correctly performs a **case-insensitive comparison** of the value.
+This means the following are all treated as valid:
+
+    X-UA-Compatible: IE=edge
+    X-UA-Compatible: Ie=EdGe
+    x-ua-compatible: ie=edge
+
+Only values that are not equal to `ie=edge` (ignoring case and spacing)
+will trigger an error.
 
 ```text
 X-UA-Compatible: IE=edge
 ```
-may incorrectly trigger this hint.
-
-This is a known limitation of the current behavior. For reference, see:
-https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/jj676915(v=vs.85)
-
-By default, the hint checks if the `X-UA-Compatible` response header
-is sent with the value of `IE=edge`, and that the `meta` tag isn’t
-used.
-
 ### Examples that **trigger** the hint for defaults
 
 `X-UA-Compatible` response header is not sent:
